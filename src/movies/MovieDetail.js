@@ -24,7 +24,7 @@ export const MovieDetail = ({ match }) => {
         .get(url)
         .then(response => setMovie(response.data));
       setIsLoading(false)
-    }, []);
+    }, [match.params.id]);
   if (isLoading) {
     return (
       <div className="sk-chase">

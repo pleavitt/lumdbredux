@@ -1,17 +1,16 @@
 {
-  "name": "rrfe",
+  "name": "TReactMDB",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.19.2",
     "node-sass": "^4.13.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-overdrive": "0.0.9",
-    "react-redux": "^5.0.7",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-overdrive": "0.0.10",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.17",
-    "styled-components": "^3.4.6"
+    "react-scripts": "3.3.1",
+    "styled-components": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -20,13 +19,25 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "eslint": "^5.5.0",
+    "eslint": "6.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.0.1",
-    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^2.6.2",
-    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-react": "^7.18.2",
     "prettier": "^1.14.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

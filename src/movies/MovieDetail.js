@@ -1,27 +1,44 @@
-/* eslint react/no-did-mount-set-state: 0 */
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Overdrive from 'react-overdrive';
-
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Poster } from './Movie';
+import Axios from 'axios';
 
-import { getMovie } from './actions';
+import './MovieDetail.scss';
 
 const POSTER_PATH = 'http://image.tmdb.org/t/p/w154';
 const BACKDROP_PATH = 'http://image.tmdb.org/t/p/w1280';
 
-class MovieDetail extends Component {
-  componentDidMount() {
-    const { match } = this.props;
+const API_KEY = '65e043c24785898be00b4abc12fcdaae'
 
-    this.props.getMovie(match.params.id);
+export const MovieDetail = ({ match }) => {
+  const [movie, setMovie] = useState({ id: null });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(
+    () => {
+      // Update the document title using the browser API
+      const url = `https://api.themoviedb.org/3/movie/${match.params.id}?api_key=${API_KEY}&language=en-US`;
+      setIsLoading(true);
+      Axios
+        .get(url)
+        .then(response => setMovie(response.data));
+      setIsLoading(false)
+    }, []);
+  if (isLoading) {
+    return (
+      <div className="sk-chase">
+        <div className="sk-chase-dot"></div>
+        <div className="sk-chase-dot"></div>
+        <div className="sk-chase-dot"></div>
+        <div className="sk-chase-dot"></div>
+        <div className="sk-chase-dot"></div>
+        <div className="sk-chase-dot"></div>
+      </div>
+    )
   }
-
-  render() {
-    const { movie } = this.props;
-    if (!movie.id) return null;
+  else if (!movie.id) return <div>empty</div>;
+  else
     return (
       <MovieWrapper backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}>
         <MovieInfo>
@@ -29,7 +46,6 @@ class MovieDetail extends Component {
             <Poster src={`${POSTER_PATH}${movie.poster_path}`} alt={movie.title} />
           </Overdrive>
           <div>
-            {movie.title ? <h1>Hello</h1> : <h1>Hi</h1>}
             <h1>{movie.title}</h1>
             <h3>{movie.release_date}</h3>
             <p>{movie.overview}</p>
@@ -37,26 +53,9 @@ class MovieDetail extends Component {
         </MovieInfo>
       </MovieWrapper>
     );
-  }
 }
 
-const mapStateToProps = state => ({
-  movie: state.movies.movie,
-  isLoaded: state.movies.movieLoaded,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getMovie,
-    },
-    dispatch
-  );
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MovieDetail);
+export default MovieDetail;
 
 const MovieWrapper = styled.div`
   position: relative;

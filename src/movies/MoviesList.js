@@ -1,27 +1,20 @@
 /* eslint react/no-did-mount-set-state: 0 */
-import React, { PureComponent } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Movie from './Movie';
-import { getMovies, resetMovie } from './actions';
+import Axios from 'axios';
 
-class MoviesList extends PureComponent {
-  componentDidMount() {
-    const { isLoaded } = this.props;
+const API_KEY = '65e043c24785898be00b4abc12fcdaae';
+const MOVIES_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
-    if (!isLoaded) {
-      this.props.getMovies();
-    }
-  }
 
-  componentWillUnmount() {
-    this.props.resetMovie();
-  }
+const MoviesList = () => {
+    const [movies, setMovies] = useState([])
 
-  render() {
-    const { movies, isLoaded } = this.props;
-    if (!isLoaded) return <h1>Loading</h1>;
+    useEffect(() => {
+      Axios.get(MOVIES_URL)
+      .then(({data}) => setMovies(data.results))
+    }, [])
     return (
       <MovieGrid>
         {movies.map(movie => (
@@ -29,27 +22,9 @@ class MoviesList extends PureComponent {
         ))}
       </MovieGrid>
     );
-  }
 }
 
-const mapStateToProps = state => ({
-  movies: state.movies.movies,
-  isLoaded: state.movies.moviesLoaded,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getMovies,
-      resetMovie,
-    },
-    dispatch
-  );
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MoviesList);
+export default MoviesList;
 
 const MovieGrid = styled.div`
   display: grid;

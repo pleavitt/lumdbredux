@@ -3,6 +3,8 @@
 </h1>
 
 This project pulls movie information from themovieDB
+Originally used redux for state management.
+Refactored it to use hooks and context.
 
 ## 🚀 Demo
 
@@ -10,7 +12,5 @@ This project pulls movie information from themovieDB
 
 ## 🎓 Todo
 
-- Add a loading state (react suspense)
-- Add a Heading
 - Improve the movie detail screen
 - Implement http interceptors to handle errors from TMDB

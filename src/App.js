@@ -6,14 +6,18 @@ import './App.css';
 
 import MoviesList from './movies/MoviesList';
 import MovieDetail from './movies/MovieDetail';
+import Loader from './components/Loader';
+import LoaderContextProvider from './context/LoaderContext';
 
 const App = () => (
+  <LoaderContextProvider>
     <Router>
       <div className="App">
         <header className="App-header">
           <Link to="/">
             <img src={logo} className="App-logo" alt="logo" />
           </Link>
+          <Loader />
         </header>
         <Switch>
           <Route exact path="/" component={MoviesList} />
@@ -21,6 +25,7 @@ const App = () => (
         </Switch>
       </div>
     </Router>
+    </LoaderContextProvider>
 );
 
 export default App;

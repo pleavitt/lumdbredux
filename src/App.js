@@ -6,6 +6,7 @@ import './App.css';
 
 import MoviesList from './movies/MoviesList';
 import MovieDetail from './movies/MovieDetail';
+import MovieProvider from './context/MovieContext';
 
 const App = () => (
     <Router>
@@ -15,10 +16,12 @@ const App = () => (
             <img src={logo} className="App-logo" alt="logo" />
           </Link>
         </header>
-        <Switch>
-          <Route exact path="/" component={MoviesList} />
-          <Route path="/:id" component={MovieDetail} />
-        </Switch>
+        <MovieProvider>
+          <Switch>
+            <Route exact path="/" component={MoviesList} />
+            <Route path="/:id" component={MovieDetail} />
+          </Switch>
+        </MovieProvider>
       </div>
     </Router>
 );
